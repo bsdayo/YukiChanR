@@ -1,7 +1,7 @@
 ﻿using Flandre.Adapters.OneBot.Extensions;
 using Flandre.Framework;
 using Flandre.Framework.Extensions;
-using Flandre.Framework.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using YukiChanR;
@@ -27,6 +27,12 @@ app.UseCommandSession();
 app.UseCommandParser();
 app.UseCommandInvoker();
 
-app.MapCommand("hello", () => "world!");
+using (var scope = app.Services.CreateScope())
+{
+    void Migrate<T>() where T : YukiDbContext =>
+        scope.ServiceProvider.GetRequiredService<T>().Database.Migrate();
+
+    Migrate<ArcaeaDbContext>();
+}
 
 app.Run();
