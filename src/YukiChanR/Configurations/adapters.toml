@@ -1,0 +1,4 @@
+﻿# === 适配器配置 ===
+[[Adapters.OneBot.Bots]]
+Protocol = "WebSocket"             # 连接使用协议，仅支持 WebSocket
+Endpoint = "ws://127.0.0.1:8080"   # go-cqhttp 连接地址

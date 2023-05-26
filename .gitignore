@@ -1,0 +1,9 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+# Remove generated folders
+src/YukiChanR/configs/
+src/YukiChanR/logs/

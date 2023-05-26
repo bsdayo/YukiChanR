@@ -1,0 +1,20 @@
+# === 日志记录配置 ===
+[Serilog]
+Using = ["Serilog.Sinks.Console", "Serilog.Sinks.File"]
+Enrich = ["FromLogContext"]
+MinimumLevel = "Information"   # 最低日志等级
+
+# 控制台记录器
+[[Serilog.WriteTo]]
+Name = "Console"
+
+# 文件记录器
+[[Serilog.WriteTo]]
+Name = "File"
+[Serilog.WriteTo.Args]
+# 日志文件路径
+Path = "logs/.log"
+# 日志滚动周期
+RollingInterval = "Day"
+# 与其他进程共享日志文件
+Shared = true

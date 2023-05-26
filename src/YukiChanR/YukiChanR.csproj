@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Version>4.0.0-alpha.1</Version>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Configurations\*.toml"/>
+
+        <!-- Remove generated folders -->
+        <None Remove="configs\**"/>
+        <None Remove="logs\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0"/>
+        <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.0"/>
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.1-dev-00910"/>
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0"/>
+        <PackageReference Include="Tomlyn.Extensions.Configuration" Version="1.0.5"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\deps\Flandre\src\Flandre.Adapters.OneBot.Extensions\Flandre.Adapters.OneBot.Extensions.csproj"/>
+        <ProjectReference Include="..\YukiChanR.Plugins.Arcaea\YukiChanR.Plugins.Arcaea.csproj"/>
+        <ProjectReference Include="..\YukiChanR.Core\YukiChanR.Core.csproj"/>
+    </ItemGroup>
+
+</Project>

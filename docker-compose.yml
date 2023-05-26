@@ -1,0 +1,29 @@
+﻿#file: noinspection SpellCheckingInspection
+
+services:
+  yukichan-r:
+    image: bsdayo/yukichan-r
+    build: .
+    container_name: ykr
+    volumes:
+      - ~/ykr:/data
+    environment:
+      "Database:Host": ykr-pg
+      "Adapters:OneBot:Bots:0:Endpoint": ws://ykr-gocq:8080
+    depends_on:
+      - postgres
+      - go-cqhttp
+  
+  postgres:
+    image: postgres:15
+    container_name: ykr-pg
+    volumes:
+      - ~/ykr-pg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+  
+  go-cqhttp:
+    image: silicer/go-cqhttp
+    container_name: ykr-gocq
+    volumes:
+      - ~/ykr-gocq:/data

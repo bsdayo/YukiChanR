@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <JsonResource Include="Resources\Strings\*.json" />
+        <EmbeddedResource Include="Resources\Images\**\*" />
+        <EmbeddedResource Include="Resources\Fonts\**\*" />
+        <EmbeddedResource Include="Resources\Databases\**\*" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0-preview.4.23260.4" />
+        <PackageReference Include="NekoSpace.Build.Resources.Json" Version="1.0.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="SkiaSharp" Version="2.88.3" />
+        <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.3" />
+        <PackageReference Include="UnofficialArcaeaAPI.Lib" Version="3.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\YukiChanR.Core\YukiChanR.Core.csproj" />
+    </ItemGroup>
+
+</Project>
