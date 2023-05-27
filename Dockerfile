@@ -26,16 +26,15 @@ RUN dotnet restore
 
 # Build project
 COPY . .
-RUN dotnet build src/YukiChanR/YukiChanR.csproj
+RUN dotnet build src/YukiChanR/YukiChanR.csproj \
+    -c Release \
+    --no-restore \
+    -p:UseAppHost=false
 
 # Publish project
 RUN dotnet publish src/YukiChanR/YukiChanR.csproj \
-    --no-restore \
     --no-build \
-    --no-self-contained \
-    -c Release \
-    -o publish \
-    -p:UseAppHost=false
+    -o publish
 
 
 # Runtime stage
