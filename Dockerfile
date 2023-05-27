@@ -1,5 +1,5 @@
 ﻿# Build stage
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-preview AS build
 
 WORKDIR /repo
 
@@ -26,13 +26,13 @@ RUN dotnet restore
 
 # Build project
 COPY . .
-RUN dotnet build src/YukiChanR/YukiChanR.csproj \
+RUN dotnet build YukiChanR \
     -c Release \
     --no-restore \
     -p:UseAppHost=false
 
 # Publish project
-RUN dotnet publish src/YukiChanR/YukiChanR.csproj \
+RUN dotnet publish YukiChanR \
     -c Release \
     --no-build \
     -o publish \
