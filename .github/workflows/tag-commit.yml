@@ -13,9 +13,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Fetch remote tags
+        run: git fetch --prune --tags
 
       - name: Tag commit
         run: |
@@ -23,7 +26,7 @@ jobs:
 
           git tag
 
-          if [ ! $(git tag | awk "\$1 == \"v$version\" { print \$1 }") ]; then
+          if [ ! $(git tag -l | awk "\$1 == \"v$version\" { print \$1 }") ]; then
               echo "Tagging v$version to $GITHUB_SHA..."
               git config user.name $GITHUB_ACTOR
               git config user.email ${GITHUB_ACTOR}@users.noreply.github.com
