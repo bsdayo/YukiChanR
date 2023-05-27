@@ -2,11 +2,11 @@
 
 services:
   yukichan-r:
-    image: bsdayo/yukichan-r
+    image: bsdayo/yukichan-r:latest
     build: .
     container_name: ykr
     volumes:
-      - ~/ykr:/data
+      - ykr:/data
     environment:
       "Database:Host": ykr-pg
       "Adapters:OneBot:Bots:0:Endpoint": ws://ykr-gocq:8080
@@ -18,7 +18,7 @@ services:
     image: postgres:15
     container_name: ykr-pg
     volumes:
-      - ~/ykr-pg:/var/lib/postgresql/data
+      - ykr-pg:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgres
   
@@ -26,4 +26,9 @@ services:
     image: silicer/go-cqhttp
     container_name: ykr-gocq
     volumes:
-      - ~/ykr-gocq:/data
+      - ykr-gocq:/data
+
+volumes:
+  ykr:
+  ykr-pg:
+  ykr-gocq:
