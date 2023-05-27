@@ -5,13 +5,23 @@ WORKDIR /repo
 
 # Copy all project files and restore first
 COPY YukiChanR.sln ./
-COPY deps/Flandre/src/Flandre.Core/Flandre.Core.csproj deps/Flandre/src/Flandre.Core/
-COPY deps/Flandre/src/Flandre.Framework/Flandre.Framework.csproj deps/Flandre/src/Flandre.Framework/
-COPY deps/Flandre/src/Flandre.Adapters.OneBot/Flandre.Adapters.OneBot.csproj deps/Flandre/src/Flandre.Adapters.OneBot/
-COPY deps/Flandre/src/Flandre.Adapters.OneBot/Flandre.Adapters.OneBot.Extensions.csproj deps/Flandre/src/Flandre.Adapters.OneBot.Extensions/
-COPY src/YukiChanR/YukiChanR.csproj src/YukiChanR/
-COPY src/YukiChanR.Core/YukiChanR.Core.csproj src/YukiChanR.Core/
-COPY src/YukiChanR.Plugins.Arcaea/YukiChanR.Plugins.Arcaea.csproj src/YukiChanR.Plugins.Arcaea/
+
+COPY deps/Flandre/src/Flandre.Core/Flandre.Core.csproj \
+    deps/Flandre/src/Flandre.Core/
+COPY deps/Flandre/src/Flandre.Framework/Flandre.Framework.csproj \
+    deps/Flandre/src/Flandre.Framework/
+COPY deps/Flandre/src/Flandre.Adapters.OneBot/Flandre.Adapters.OneBot.csproj \
+    deps/Flandre/src/Flandre.Adapters.OneBot/
+COPY deps/Flandre/src/Flandre.Adapters.OneBot.Extensions/Flandre.Adapters.OneBot.Extensions.csproj \
+    deps/Flandre/src/Flandre.Adapters.OneBot.Extensions/
+
+COPY src/YukiChanR/YukiChanR.csproj \
+    src/YukiChanR/
+COPY src/YukiChanR.Core/YukiChanR.Core.csproj \
+    src/YukiChanR.Core/
+COPY src/YukiChanR.Plugins.Arcaea/YukiChanR.Plugins.Arcaea.csproj \
+    src/YukiChanR.Plugins.Arcaea/
+
 RUN dotnet restore
 
 # Build project
