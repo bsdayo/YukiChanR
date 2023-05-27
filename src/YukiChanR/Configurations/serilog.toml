@@ -3,7 +3,10 @@
 [Serilog]
 Using = ["Serilog.Sinks.Console", "Serilog.Sinks.File"]
 Enrich = ["FromLogContext"]
-MinimumLevel = "Information"   # 最低日志等级
+
+[Serilog.MinimumLevel]
+Default = "Information"   # 最低日志等级
+Override."Websocket.Client" = "Fatal"
 
 # 控制台记录器
 [[Serilog.WriteTo]]
