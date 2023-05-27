@@ -1,5 +1,6 @@
 ﻿# Build stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0-preview AS build
+# We need to replace dotnet/nightly/sdk with dotnet/sdk after net8.0 come out
+FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview AS build
 ARG TARGETARCH
 
 WORKDIR /repo
@@ -23,20 +24,18 @@ COPY src/YukiChanR.Core/YukiChanR.Core.csproj \
 COPY src/YukiChanR.Plugins.Arcaea/YukiChanR.Plugins.Arcaea.csproj \
     src/YukiChanR.Plugins.Arcaea/
 
-RUN dotnet restore -a $TARGETARCH
+RUN dotnet restore
 
 # Build project
 COPY . .
 RUN dotnet build src/YukiChanR/YukiChanR.csproj \
     -c Release \
-    -a $TARGETARCH \
     --no-restore \
     -p:UseAppHost=false
 
 # Publish project
 RUN dotnet publish src/YukiChanR/YukiChanR.csproj \
     -c Release \
-    -a $TARGETARCH \
     --no-build \
     -o publish \
     -p:UseAppHost=false
