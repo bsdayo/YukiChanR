@@ -33,6 +33,7 @@ RUN dotnet build src/YukiChanR/YukiChanR.csproj \
 
 # Publish project
 RUN dotnet publish src/YukiChanR/YukiChanR.csproj \
+    -c Release \
     --no-build \
     -o publish
 
