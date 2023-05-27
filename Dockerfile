@@ -35,7 +35,8 @@ RUN dotnet build src/YukiChanR/YukiChanR.csproj \
 RUN dotnet publish src/YukiChanR/YukiChanR.csproj \
     -c Release \
     --no-build \
-    -o publish
+    -o publish \
+    -p:UseAppHost=false
 
 
 # Runtime stage
