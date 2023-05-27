@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sentry;
 using Serilog;
 using Tomlyn.Extensions.Configuration;
 using YukiChanR.Core;
@@ -57,5 +58,13 @@ public static class StartupUtils
             .CreateLogger();
         logging.ClearProviders();
         logging.AddSerilog(dispose: true);
+    }
+
+    public static void InitializeSentry(this IConfiguration configuration)
+    {
+        if (string.IsNullOrWhiteSpace(configuration["Sentry:Dsn"]))
+            return;
+
+        SentrySdk.Init(options => configuration.GetSection("Sentry").Bind(options));
     }
 }

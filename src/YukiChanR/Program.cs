@@ -14,6 +14,8 @@ builder.Configuration.PrepareConfigurations(builder.Environment, args);
 builder.Services.ConfigureFlandreApp(builder.Configuration);
 builder.Services.Configure<YukiOptions>(builder.Configuration);
 
+builder.Configuration.InitializeSentry();
+
 builder.Logging.ConfigureAndAddSerilog(builder.Configuration);
 
 builder.Adapters.AddOneBot();

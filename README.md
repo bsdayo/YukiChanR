@@ -6,11 +6,11 @@
     - [x] `/a alias`
     - [ ] `/a best`
     - [ ] `/a b30`
-    - [ ] `/a bind`
+    - [x] `/a bind`
     - [ ] `/a guess`
     - [x] `/a info`
     - [x] `/a preview`
-    - [ ] `/a ptt`
+    - [x] `/a ptt`
     - [x] `/a random`
     - [ ] ~~`/a recent`~~ 由于 lowiro 删除了接口数据，无法再获取最近游玩曲目
     - [ ] `/a set`

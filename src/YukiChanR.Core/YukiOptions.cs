@@ -1,10 +1,13 @@
 ﻿using System.Text;
+using Sentry;
 
 namespace YukiChanR.Core;
 
 public sealed class YukiOptions
 {
     public YukiDatabaseOptions Database { get; set; } = new();
+
+    public SentryOptions Sentry { get; set; } = new();
 }
 
 public sealed class YukiDatabaseOptions

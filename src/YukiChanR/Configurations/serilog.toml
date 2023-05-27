@@ -1,4 +1,5 @@
-# === 日志记录配置 ===
+# === Serilog 日志记录配置 ===
+
 [Serilog]
 Using = ["Serilog.Sinks.Console", "Serilog.Sinks.File"]
 Enrich = ["FromLogContext"]

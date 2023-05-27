@@ -1,4 +1,5 @@
 ﻿# === 插件配置 ===
+
 [Plugins.Arcaea]
 UaaApiUrl = "https://example.com"   # UAA 地址
 UaaToken = "1145141919810"          # UAA Token
