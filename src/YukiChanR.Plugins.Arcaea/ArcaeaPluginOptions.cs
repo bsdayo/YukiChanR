@@ -6,7 +6,7 @@ public sealed class ArcaeaPluginOptions
 
     public string UaaToken { get; set; } = "";
 
-    public TimeSpan UaaTimeout { get; set; }
+    public TimeSpan UaaTimeout { get; set; } = TimeSpan.FromMinutes(1);
 
     public bool EnableGuess { get; set; } = true;
 }
