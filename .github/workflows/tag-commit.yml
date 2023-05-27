@@ -15,10 +15,11 @@ jobs:
       - name: Tag commit
         run: |
           version=$(cat src/YukiChanR/YukiChanR.csproj | grep -Po "(?<=\<Version\>).*(?=\</Version\>)")
-          echo $version
+
           if [ $(git tag | awk "\$1 == \"v$version\" { print \$1 }") ]; then
+              echo "Tagging $version to $GITHUB_SHA..."
               git config user.name $GITHUB_ACTOR
               git config user.email ${GITHUB_ACTOR}@users.noreply.github.com
-              git tag $version
-              git push origin $version
+              git tag "v$version"
+              git push origin "v$version"
           fi
