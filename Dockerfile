@@ -22,7 +22,7 @@ COPY src/YukiChanR.Core/YukiChanR.Core.csproj \
 COPY src/YukiChanR.Plugins.Arcaea/YukiChanR.Plugins.Arcaea.csproj \
     src/YukiChanR.Plugins.Arcaea/
 
-RUN dotnet restore
+RUN dotnet restore -a $TARGETARCH
 
 # Build project
 COPY . .
