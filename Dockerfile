@@ -28,12 +28,14 @@ RUN dotnet restore
 COPY . .
 RUN dotnet build src/YukiChanR/YukiChanR.csproj \
     -c Release \
+    -a $TARGETARCH \
     --no-restore \
     -p:UseAppHost=false
 
 # Publish project
 RUN dotnet publish src/YukiChanR/YukiChanR.csproj \
     -c Release \
+    -a $TARGETARCH \
     --no-build \
     -o publish \
     -p:UseAppHost=false
