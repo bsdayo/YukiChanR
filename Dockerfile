@@ -26,13 +26,13 @@ RUN dotnet restore
 
 # Build project
 COPY . .
-RUN dotnet build YukiChanR \
+RUN dotnet build src/YukiChanR/YukiChanR.csproj \
     -c Release \
     --no-restore \
     -p:UseAppHost=false
 
 # Publish project
-RUN dotnet publish YukiChanR \
+RUN dotnet publish src/YukiChanR/YukiChanR.csproj \
     -c Release \
     --no-build \
     -o publish \
