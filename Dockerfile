@@ -1,6 +1,9 @@
 ﻿# Build stage
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-preview AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-preview-alpine AS build
+
 ARG TARGETARCH
+ARG BUILD_BRANCH=unknown
+ARG BUILD_COMMIT_HASH=0000000000000000000000000000000000000000
 
 WORKDIR /repo
 
@@ -33,7 +36,10 @@ RUN dotnet build src/YukiChanR/YukiChanR.csproj \
     -c Release \
     -a $TARGETARCH \
     --no-restore \
-    -p:UseAppHost=false
+    -p:UseAppHost=false \
+    -p:BuildBranch=$BUILD_BRANCH \
+    -p:BuildCommitHash=$BUILD_COMMIT_HASH \
+    -p:BuildExtraTags=docker
 
 # Publish project
 RUN dotnet publish src/YukiChanR/YukiChanR.csproj \

@@ -10,32 +10,25 @@
         <ProjectReference Include="..\YukiChanR.Core\YukiChanR.Core.csproj"/>
     </ItemGroup>
 
-    <Target Name="GenerateBuildInfo" BeforeTargets="CoreCompile">
-        <PropertyGroup>
-            <BuildInfoOutputText>$(IntermediateOutputPath)BuildInfo.txt</BuildInfoOutputText>
-            <BuildInfoOutputCode>$(IntermediateOutputPath)BuildInfo.cs</BuildInfoOutputCode>
-        </PropertyGroup>
-
+    <Target Name="GenerateBuildInfo" BeforeTargets="BeforeBuild">
         <!-- Get current branch -->
-        <Exec Command="git -C $(ProjectDir) rev-parse --abbrev-ref HEAD &gt; $(BuildInfoOutputText)"/>
+        <Exec Condition="$(BuildBranch) == ''"
+              ConsoleToMSBuild="true"
+              Command="git rev-parse --abbrev-ref HEAD">
+            <Output TaskParameter="ConsoleOutput" PropertyName="BuildBranch"/>
+        </Exec>
+
         <!-- Get current commit hash -->
-        <Exec Command="git -C $(ProjectDir) rev-parse HEAD &gt;&gt; $(BuildInfoOutputText)"/>
-
-        <ReadLinesFromFile File="$(BuildInfoOutputText)">
-            <Output TaskParameter="Lines" ItemName="BuildInfo"/>
-        </ReadLinesFromFile>
-
-        <ItemGroup>
-            <BuildInfoAttribute Include="AssemblyMetadata">
-                <_Parameter1>BuildInfo</_Parameter1>
-                <_Parameter2>@(BuildInfo)</_Parameter2>
-            </BuildInfoAttribute>
-        </ItemGroup>
-
-        <WriteCodeFragment Language="C#" OutputFile="$(BuildInfoOutputCode)" AssemblyAttributes="@(BuildInfoAttribute)"/>
+        <Exec Condition="$(BuildCommitHash) == ''"
+              ConsoleToMSBuild="true"
+              Command="git rev-parse HEAD">
+            <Output TaskParameter="ConsoleOutput" PropertyName="BuildCommitHash"/>
+        </Exec>
 
         <ItemGroup>
-            <Compile Include="$(BuildInfoOutputCode)"/>
+            <AssemblyMetadata Include="BuildBranch" Value="$(BuildBranch)"/>
+            <AssemblyMetadata Include="BuildCommitHash" Value="$(BuildCommitHash)"/>
+            <AssemblyMetadata Include="BuildExtraTags" Value="$(BuildExtraTags)"/>
         </ItemGroup>
     </Target>
 

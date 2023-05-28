@@ -18,8 +18,7 @@ public sealed class MonitorPlugin : Plugin
     )
     {
         var builder = new StringBuilder();
-        builder.AppendLine("暮雪酱 Revive | YukiChanR");
-        builder.AppendLine($"[{BuildInfo.Branch}@{BuildInfo.ShortCommitHash}]");
+        builder.AppendLine($"暮雪酱 Revive   [{BuildInfo.Branch}@{BuildInfo.ShortCommitHash}]");
 
         if (uptime || all)
         {

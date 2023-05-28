@@ -18,9 +18,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Log
-        run: git rev-parse HEAD
-
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -51,3 +48,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            BUILD_BRANCH=${{ github.ref_name }}
+            BUILD_COMMIT_HASH=${{ github.sha }}
