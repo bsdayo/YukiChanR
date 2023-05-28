@@ -17,9 +17,9 @@
         </PropertyGroup>
 
         <!-- Get current branch -->
-        <Exec Command="git rev-parse --abbrev-ref HEAD &gt; $(BuildInfoOutputText)"/>
+        <Exec Command="git -C $(ProjectDir) rev-parse --abbrev-ref HEAD &gt; $(BuildInfoOutputText)"/>
         <!-- Get current commit hash -->
-        <Exec Command="git rev-parse HEAD &gt;&gt; $(BuildInfoOutputText)"/>
+        <Exec Command="git -C $(ProjectDir) rev-parse HEAD &gt;&gt; $(BuildInfoOutputText)"/>
 
         <ReadLinesFromFile File="$(BuildInfoOutputText)">
             <Output TaskParameter="Lines" ItemName="BuildInfo"/>
