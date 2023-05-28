@@ -35,7 +35,9 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: bsdayo/yukichan-r
-          tags: type=semver,pattern={{version}}
+          tags: |
+            type=semver,pattern={{version}}
+            type=match,pattern=(?<=v\d\.\d\.\d-)[a-z]+(?=\.?)
 
       - name: Build and push
         uses: docker/build-push-action@v2
