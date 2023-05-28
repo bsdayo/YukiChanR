@@ -18,15 +18,10 @@ jobs:
       - name: Generate release note
         run: |
           echo -e "> 暂时还没有说明哦...\n" >> release-note
-          cat release-note
-          previousTag=$(git tag -l | grep -B1 $GITHUB_REF_NAME | grep -v $GITHUB_REF_NAME)
-          echo $previousTag
-          cat release-note
-          comparePath=$([ $previousTag ] && echo -e "commits/$GITHUB_REF_NAME" || echo -e "compare/$previousTag...$GITHUB_REF_NAME")
-          echo $comparePath
-          cat release-note
+
+          previousTag=$((git tag -l | grep -B1 $GITHUB_REF_NAME | grep -v $GITHUB_REF_NAME) || echo '')
+          comparePath=$([ -z $previousTag ] && echo -e "commits/$GITHUB_REF_NAME" || echo -e "compare/$previousTag...$GITHUB_REF_NAME")
           echo -e "**Full Changelog**: https://github.com/$GITHUB_REPOSITORY/$comparePath" >> release-note
-          cat release-note
 
       - name: Preview release note
         run: cat release-note
@@ -35,3 +30,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body_path: release-note
+          prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
