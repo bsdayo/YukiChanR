@@ -4,13 +4,17 @@ on:
   push:
     tags: [ v*.*.* ]
 
+env:
+  REPO_BASE: https://github.com/${{ github.repository }}
+  TAG_NAME: ${{ github.ref_name }}
+
 jobs:
   release:
     runs-on: ubuntu-latest
 
     permissions:
       contents: write
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -20,17 +24,26 @@ jobs:
 
       - name: Generate release note
         run: |
-          echo -e "> 暂时还没有说明哦...\n" >> release-note
+          echo -e "## 概述\n" >> release-note.txt
+          echo -e "> 暂时还没有说明哦...\n" >> release-note.txt
 
-          previousTag=$((git tag -l | grep -B1 $GITHUB_REF_NAME | grep -v $GITHUB_REF_NAME) || echo '')
-          comparePath=$([ -z $previousTag ] && echo -e "commits/$GITHUB_REF_NAME" || echo -e "compare/$previousTag...$GITHUB_REF_NAME")
-          echo -e "**Full Changelog**: https://github.com/$GITHUB_REPOSITORY/$comparePath" >> release-note
+          echo -e "## 构建信息\n" >> release-note.txt
+          echo "- Tag: [\`$TAG_NAME\`]($REPO_BASE/tree/$TAG_NAME)" >> release-note.txt
+          echo "- Commit: [\`$GITHUB_SHA\`]($REPO_BASE/commit/$GITHUB_SHA)" >> release-note.txt
+
+          dockerTagName=$(echo $TAG_NAME | grep -Po "(?<=v).*")
+          echo "- Docker: \`bsdayo/yukichan-r:$dockerTagName\` ([Dockerfile]($REPO_BASE/blob/$GITHUB_SHA/Dockerfile))" >> release-note.txt
+
+          previousTag=$((git tag -l | grep -B1 $TAG_NAME | grep -v $TAG_NAME) || echo '')
+          comparePath=$([ -z $previousTag ] && echo -e "commits/$TAG_NAME" || echo -e "compare/$previousTag...$TAG_NAME")
+          echo -e "\n## 完整更改\n" >> release-note.txt
+          echo "$REPO_BASE/$comparePath" >> release-note.txt
 
       - name: Preview release note
-        run: cat release-note
+        run: cat release-note.txt
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          body_path: release-note
+          body_path: release-note.txt
           prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
