@@ -1,0 +1,4 @@
+﻿# === Sentry 异常监控配置 ===
+sentry:
+  dsn: ""  # 如果为空，将禁用 Sentry 监控功能。
+  autoSessionTracking: true

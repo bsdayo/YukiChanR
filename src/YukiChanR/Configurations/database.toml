@@ -1,9 +1,0 @@
-﻿# === 数据库连接配置 ===
-
-[Database]
-Host = "127.0.0.1"        # 地址
-Port = 5432               # 端口
-Username = "postgres"     # 用户名
-Password = "postgres"     # 密码
-Database = "postgres"     # 数据库名称
-ConnectionString = ""     # 自定义连接字符串。设置后将忽略以上设置。

@@ -1,0 +1,7 @@
+﻿# === 数据库连接配置 ===
+database:
+  host: 127.0.0.1         # 地址
+  port: 5432              # 端口
+  username: postgres      # 用户名
+  password: postgres      # 密码
+  database: postgres      # 数据库名称

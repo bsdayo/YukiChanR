@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Configurations\*.toml" />
+        <EmbeddedResource Include="Configurations\*.yml" />
 
         <!-- Remove generated folders -->
         <None Remove="configs\**" />
@@ -22,11 +22,11 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
         <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="4.1.1-dev-00910" />
         <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-        <PackageReference Include="Tomlyn.Extensions.Configuration" Version="1.0.5" />
     </ItemGroup>
 
     <ItemGroup>

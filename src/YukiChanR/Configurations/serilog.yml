@@ -1,0 +1,15 @@
+# === Serilog 日志记录配置 ===
+serilog:
+  using: [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ]
+  enrich: [ "FromLogContext" ]
+  minimumLevel:
+    default: "Information"   # 最低日志等级
+    override:
+      Websocket.Client: "Fatal"
+  writeTo:
+    - name: Console
+    - name: File
+      args:
+        path: "logs/.log"        # 日志文件路径
+        rollingInterval: "Day"   # 日志滚动周期
+        shared: true             # 与其他进程共享日志文件

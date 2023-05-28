@@ -3,7 +3,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sentry;
 using Serilog;
-using Tomlyn.Extensions.Configuration;
 using YukiChanR.Core;
 
 namespace YukiChanR;
@@ -27,7 +26,7 @@ public static class StartupUtils
         foreach (var name in configResources)
         {
             var configName = name.Split('.')[^2];
-            var configPath = Path.Combine(YukiDirectories.Configs, $"{configName}.toml");
+            var configPath = Path.Combine(YukiDirectories.Configs, $"{configName}.yml");
             configNames.Add(configName);
 
             if (File.Exists(configPath)) continue;
@@ -39,12 +38,12 @@ public static class StartupUtils
         }
 
         foreach (var configName in configNames)
-            configuration.AddTomlFile(
-                Path.Combine(YukiDirectories.Configs, $"{configName}.toml"),
+            configuration.AddYamlFile(
+                Path.Combine(YukiDirectories.Configs, $"{configName}.yml"),
                 true, true);
         foreach (var configName in configNames)
-            configuration.AddTomlFile(
-                Path.Combine(YukiDirectories.Configs, $"{configName}.{environment.EnvironmentName}.toml"),
+            configuration.AddYamlFile(
+                Path.Combine(YukiDirectories.Configs, $"{configName}.{environment.EnvironmentName}.yml"),
                 true, true);
 
         configuration.AddEnvironmentVariables();

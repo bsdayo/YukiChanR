@@ -1,0 +1,6 @@
+﻿# === 插件配置 ===
+plugins:
+  arcaea:
+    uaaApiUrl: https://example.com   # UAA 地址
+    uaaToken: 1145141919810          # UAA Token
+    uaaTimeout: 00:01:00             # UAA 请求超时时间
