@@ -1,0 +1,32 @@
+﻿name: Auto Release
+
+on:
+  push:
+    tags: [ v*.*.* ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Fetch remote tags
+        run: git fetch --prune --tags
+
+      - name: Generate release note
+        run: |
+          echo -e "> 暂时还没有说明哦...\n" >> release-note
+          
+          previousTag=$(git tag -l | grep $GITHUB_REF_NAME -B1 | grep -v $GITHUB_REF_NAME)
+          path=$([ previousTag ] && echo "commits/$GITHUB_REF_NAME" || echo "compare/$previousTag...$GITHUB_REF_NAME")
+          echo -e "**Full Changelog**: https://github.com/$GITHUB_REPOSITORY/$path" >> release-note
+
+      - name: Preview release note
+        run: cat release-note
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: release-note
