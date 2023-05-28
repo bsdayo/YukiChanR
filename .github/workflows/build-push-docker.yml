@@ -19,7 +19,7 @@ jobs:
           submodules: true
 
       - name: Log
-        run: ls -a
+        run: git rev-parse HEAD
 
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v1
