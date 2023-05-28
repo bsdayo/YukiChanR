@@ -20,7 +20,7 @@ jobs:
           echo -e "> 暂时还没有说明哦...\n" >> release-note
           
           previousTag=$(git tag -l | grep $GITHUB_REF_NAME -B1 | grep -v $GITHUB_REF_NAME)
-          path=$([ previousTag ] && echo "commits/$GITHUB_REF_NAME" || echo "compare/$previousTag...$GITHUB_REF_NAME")
+          path=$([ $previousTag ] && echo -e "commits/$GITHUB_REF_NAME" || echo -e "compare/$previousTag...$GITHUB_REF_NAME")
           echo -e "**Full Changelog**: https://github.com/$GITHUB_REPOSITORY/$path" >> release-note
 
       - name: Preview release note
