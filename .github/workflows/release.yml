@@ -18,12 +18,15 @@ jobs:
       - name: Generate release note
         run: |
           echo -e "> 暂时还没有说明哦...\n" >> release-note
-          
+          echo release-note
           previousTag=$(git tag -l | grep $GITHUB_REF_NAME -B1 | grep -v $GITHUB_REF_NAME)
           echo $previousTag
+          echo release-note
           comparePath=$([ $previousTag ] && echo -e "commits/$GITHUB_REF_NAME" || echo -e "compare/$previousTag...$GITHUB_REF_NAME")
           echo $comparePath
+          echo release-note
           echo -e "**Full Changelog**: https://github.com/$GITHUB_REPOSITORY/$comparePath" >> release-note
+          echo release-note
 
       - name: Preview release note
         run: cat release-note
