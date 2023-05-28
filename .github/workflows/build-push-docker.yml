@@ -18,8 +18,8 @@ jobs:
         with:
           submodules: true
 
-      - name: Add safe directory
-        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+      - name: Log
+        run: ls -a
 
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v1
