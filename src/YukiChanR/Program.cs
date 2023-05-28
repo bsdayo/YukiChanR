@@ -7,6 +7,9 @@ using Microsoft.Extensions.Hosting;
 using YukiChanR;
 using YukiChanR.Core;
 using YukiChanR.Plugins.Arcaea;
+using YukiChanR.Plugins.Monitor;
+
+MonitorPlugin.UptimeStopwatch.Start();
 
 var builder = FlandreApp.CreateBuilder();
 
@@ -21,6 +24,7 @@ builder.Logging.ConfigureAndAddSerilog(builder.Configuration);
 builder.Adapters.AddOneBot();
 
 builder.Plugins.AddArcaea();
+builder.Plugins.AddMonitor();
 
 var app = builder.Build();
 
@@ -31,8 +35,11 @@ app.UseCommandInvoker();
 
 using (var scope = app.Services.CreateScope())
 {
-    void Migrate<T>() where T : YukiDbContext =>
-        scope.ServiceProvider.GetRequiredService<T>().Database.Migrate();
+    void Migrate<T>() where T : YukiDbContext
+    {
+        var db = scope.ServiceProvider.GetRequiredService<T>();
+        db.Database.Migrate();
+    }
 
     Migrate<ArcaeaDbContext>();
 }

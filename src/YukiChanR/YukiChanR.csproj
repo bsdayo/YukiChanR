@@ -33,6 +33,7 @@
         <ProjectReference Include="..\..\deps\Flandre\src\Flandre.Adapters.OneBot.Extensions\Flandre.Adapters.OneBot.Extensions.csproj" />
         <ProjectReference Include="..\YukiChanR.Plugins.Arcaea\YukiChanR.Plugins.Arcaea.csproj" />
         <ProjectReference Include="..\YukiChanR.Core\YukiChanR.Core.csproj" />
+        <ProjectReference Include="..\YukiChanR.Plugins.Monitor\YukiChanR.Plugins.Monitor.csproj" />
     </ItemGroup>
 
 </Project>

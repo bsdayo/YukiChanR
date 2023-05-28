@@ -22,6 +22,8 @@ COPY src/YukiChanR.Core/YukiChanR.Core.csproj \
     src/YukiChanR.Core/
 COPY src/YukiChanR.Plugins.Arcaea/YukiChanR.Plugins.Arcaea.csproj \
     src/YukiChanR.Plugins.Arcaea/
+COPY src/YukiChanR.Plugins.Monitor/YukiChanR.Plugins.Monitor.csproj \
+    src/YukiChanR.Plugins.Monitor/
 
 RUN dotnet restore -a $TARGETARCH
 

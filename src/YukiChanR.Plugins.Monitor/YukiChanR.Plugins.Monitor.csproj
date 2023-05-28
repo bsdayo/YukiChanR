@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\YukiChanR.Core\YukiChanR.Core.csproj"/>
+    </ItemGroup>
+
+    <Target Name="GenerateBuildInfo" BeforeTargets="CoreCompile">
+        <PropertyGroup>
+            <BuildInfoOutputText>$(IntermediateOutputPath)BuildInfo.txt</BuildInfoOutputText>
+            <BuildInfoOutputCode>$(IntermediateOutputPath)BuildInfo.cs</BuildInfoOutputCode>
+        </PropertyGroup>
+
+        <!-- Get current branch -->
+        <Exec Command="git rev-parse --abbrev-ref HEAD &gt; $(BuildInfoOutputText)"/>
+        <!-- Get current commit hash -->
+        <Exec Command="git rev-parse HEAD &gt;&gt; $(BuildInfoOutputText)"/>
+
+        <ReadLinesFromFile File="$(BuildInfoOutputText)">
+            <Output TaskParameter="Lines" ItemName="BuildInfo"/>
+        </ReadLinesFromFile>
+
+        <ItemGroup>
+            <BuildInfoAttribute Include="AssemblyMetadata">
+                <_Parameter1>BuildInfo</_Parameter1>
+                <_Parameter2>@(BuildInfo)</_Parameter2>
+            </BuildInfoAttribute>
+        </ItemGroup>
+
+        <WriteCodeFragment Language="C#" OutputFile="$(BuildInfoOutputCode)" AssemblyAttributes="@(BuildInfoAttribute)"/>
+
+        <ItemGroup>
+            <Compile Include="$(BuildInfoOutputCode)"/>
+        </ItemGroup>
+    </Target>
+
+</Project>
