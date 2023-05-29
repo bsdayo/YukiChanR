@@ -12,7 +12,7 @@ public sealed class BuildInfo
             .Value!;
     }
 
-    public static readonly string Branch = GetMetadata("BuildBranch");
+    public static readonly string RefName = GetMetadata("BuildRefName");
 
     public static readonly string FullCommitHash = GetMetadata("BuildCommitHash");
 

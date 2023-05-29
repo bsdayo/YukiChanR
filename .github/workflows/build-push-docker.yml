@@ -49,5 +49,5 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            BUILD_BRANCH=${{ github.ref_name }}
+            BUILD_REF_NAME=${{ github.ref_name }}
             BUILD_COMMIT_HASH=${{ github.sha }}

@@ -2,7 +2,7 @@
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-preview-alpine AS build
 
 ARG TARGETARCH
-ARG BUILD_BRANCH=unknown
+ARG BUILD_REF_NAME=unknown
 ARG BUILD_COMMIT_HASH=0000000000000000000000000000000000000000
 
 WORKDIR /repo
@@ -37,7 +37,7 @@ RUN dotnet build src/YukiChanR/YukiChanR.csproj \
     -a $TARGETARCH \
     --no-restore \
     -p:UseAppHost=false \
-    -p:BuildBranch=$BUILD_BRANCH \
+    -p:BuildRefName=$BUILD_REF_NAME \
     -p:BuildCommitHash=$BUILD_COMMIT_HASH \
     -p:BuildExtraTags=docker
 
