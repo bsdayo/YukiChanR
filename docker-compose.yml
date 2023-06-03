@@ -23,7 +23,7 @@ services:
       POSTGRES_PASSWORD: postgres
   
   go-cqhttp:
-    image: silicer/go-cqhttp
+    image: silicer/go-cqhttp:latest
     container_name: ykr-gocq
     volumes:
       - ykr-gocq:/data
