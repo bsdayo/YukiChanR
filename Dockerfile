@@ -1,4 +1,4 @@
-﻿# Build stage
+# Build stage
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-preview-alpine AS build
 
 ARG TARGETARCH
