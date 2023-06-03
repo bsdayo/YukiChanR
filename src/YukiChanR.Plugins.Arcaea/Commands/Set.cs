@@ -4,8 +4,6 @@ using Flandre.Framework.Common;
 using YukiChanR.Core.Utils;
 using YukiChanR.Plugins.Arcaea.Entities;
 
-// ReSharper disable CheckNamespace
-
 namespace YukiChanR.Plugins.Arcaea;
 
 public partial class ArcaeaPlugin

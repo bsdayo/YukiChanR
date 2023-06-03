@@ -1,8 +1,6 @@
 ﻿// using Flandre.Core.Messaging;
 // using Flandre.Framework.Attributes;
 //
-// // ReSharper disable CheckNamespace
-//
 // namespace YukiChanR.Plugins.Arcaea;
 //
 // public partial class ArcaeaPlugin

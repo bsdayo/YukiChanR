@@ -6,8 +6,6 @@
 // using YukiChanR.Plugins.Arcaea.Models;
 // using YukiChanR.Core;
 //
-// // ReSharper disable CheckNamespace
-//
 // namespace YukiChanR.Plugins.Arcaea;
 //
 // public partial class ArcaeaPlugin

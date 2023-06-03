@@ -7,8 +7,6 @@ using YukiChanR.Core.Utils;
 using YukiChanR.Plugins.Arcaea.Entities;
 using YukiChanR.Plugins.Arcaea.Models;
 
-// ReSharper disable CheckNamespace
-
 namespace YukiChanR.Plugins.Arcaea;
 
 public partial class ArcaeaPlugin
@@ -65,7 +63,7 @@ public partial class ArcaeaPlugin
             logTarget, songname, difficulty.ToShortDisplayDifficulty());
 
         var image = await _imageGen.GenerateSingleAsync(
-            ArcaeaRecord.FromUaa(bestInfo.Record, bestInfo.SongInfo![(int)difficulty]), pref);
+            ArcaeaRecord.FromUaa(bestInfo.Record, bestInfo.SongInfo![0]), pref);
 
         return ctx
             .Reply($"{userInfo.Name} ({ArcaeaUtils.ToDisplayPotential(userInfo.Potential)})\n")
