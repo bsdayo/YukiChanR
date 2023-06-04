@@ -1,5 +1,5 @@
 ﻿using Flandre.Core.Messaging;
-using Flandre.Framework.Attributes;
+using Flandre.Framework.Routing;
 using UnofficialArcaeaAPI.Lib.Models;
 using YukiChanR.Core.Utils;
 

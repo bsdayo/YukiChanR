@@ -1,5 +1,6 @@
 ﻿using Flandre.Core.Messaging;
-using Flandre.Framework.Attributes;
+using Flandre.Framework.Common;
+using Flandre.Framework.Routing;
 using YukiChanR.Core.Utils;
 
 namespace YukiChanR.Plugins.Arcaea;

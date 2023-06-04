@@ -1,6 +1,6 @@
 ﻿using Flandre.Core.Messaging;
-using Flandre.Framework.Attributes;
 using Flandre.Framework.Common;
+using Flandre.Framework.Routing;
 using Microsoft.EntityFrameworkCore;
 using YukiChanR.Core.Utils;
 

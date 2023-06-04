@@ -1,5 +1,5 @@
 ﻿using Flandre.Core.Messaging;
-using Flandre.Framework.Attributes;
+using Flandre.Framework.Routing;
 using Microsoft.EntityFrameworkCore;
 using YukiChanR.Core.Utils;
 using YukiChanR.Plugins.Arcaea.Entities;
