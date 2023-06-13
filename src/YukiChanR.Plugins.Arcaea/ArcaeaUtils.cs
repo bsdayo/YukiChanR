@@ -6,6 +6,11 @@ namespace YukiChanR.Plugins.Arcaea;
 
 public static class ArcaeaUtils
 {
+    public static bool ValidateUserCode(string input)
+    {
+        return input.Length == 9 && int.TryParse(input, out _);
+    }
+    
     /// <summary>
     /// 转换 rating (eg. 98) 为难度 (eg. 9+)
     /// </summary>

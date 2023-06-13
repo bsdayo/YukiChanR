@@ -1,17 +1,16 @@
 ﻿using Flandre.Framework.Common;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using UnofficialArcaeaAPI.Lib;
+using Microsoft.Extensions.Options;
 using YukiChanR.Core;
 using YukiChanR.Plugins.Arcaea.ImageGen;
-
-[assembly: ResourceLocation("Resources.Strings")]
 
 namespace YukiChanR.Plugins.Arcaea;
 
 public sealed partial class ArcaeaPlugin : Plugin
 {
-    private readonly UaaClient _uaaClient;
+    private readonly ArcaeaPluginOptions _options;
+    private readonly UaaService _uaaService;
     private readonly ArcaeaImageGenerator _imageGen;
     private readonly ArcaeaCacheManager _cacheManager;
     private readonly ArcaeaDbContext _database;
@@ -20,6 +19,7 @@ public sealed partial class ArcaeaPlugin : Plugin
     private readonly ILogger<ArcaeaPlugin> _logger;
 
     public ArcaeaPlugin(
+        IOptions<ArcaeaPluginOptions> options,
         UaaService uaaService,
         ArcaeaImageGenerator imageGen,
         ArcaeaCacheManager cacheManager,
@@ -28,7 +28,8 @@ public sealed partial class ArcaeaPlugin : Plugin
         IStringLocalizer<ArcaeaPlugin> localizer,
         ILogger<ArcaeaPlugin> logger)
     {
-        _uaaClient = uaaService.UaaClient;
+        _options = options.Value;
+        _uaaService = uaaService;
         _imageGen = imageGen;
         _cacheManager = cacheManager;
         _database = database;

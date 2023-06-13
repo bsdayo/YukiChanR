@@ -30,8 +30,7 @@ public partial class ArcaeaPlugin
             var binding = await _database.Users.AsNoTracking().FirstOrDefaultAsync(
                 u => u.Platform == ctx.Platform && u.UserId == ctx.UserId);
             if (binding is null)
-                return ctx.Reply("请先使用 /a bind 名称或好友码 绑定你的账号哦~"
-                                 + "你也可以直接使用 /a best -u 用户名或好友码 查询指定用户。");
+                return ctx.Reply(_localizer["Common:UserNotBound", "/a best -u 用户名或好友码"]);
             target = binding.ArcaeaCode;
             logTarget = binding.ArcaeaName;
         }
@@ -42,14 +41,14 @@ public partial class ArcaeaPlugin
 
         var song = await _songDb.SearchSongAsync(songQuery);
         if (song is null)
-            return ctx.Reply("没有找到该曲目哦~");
+            return ctx.Reply(_localizer["Common:SongNotFound"]);
 
         var songname = song.Difficulties[(int)difficulty].NameEn;
 
         _logger.LogInformation("[Best:Query] {ArcaeaUser} -> {SongName} ({Difficulty})",
             logTarget, songname, difficulty.ToShortDisplayDifficulty());
 
-        var bestInfo = await _uaaClient.User.GetBestAsync(
+        var bestInfo = await _uaaService.UaaClient.User.GetBestAsync(
             target, song.SongId, UaaSongQueryType.SongId, difficulty, UaaReplyWith.SongInfo);
         var userInfo = ArcaeaUser.FromUaa(bestInfo.AccountInfo);
 
@@ -67,7 +66,8 @@ public partial class ArcaeaPlugin
             ArcaeaRecord.FromUaa(bestInfo.Record, bestInfo.SongInfo![0]), pref);
 
         return ctx
-            .Reply($"{userInfo.Name} ({ArcaeaUtils.ToDisplayPotential(userInfo.Potential)})\n")
+            .Reply(_localizer.GetReply("Best",
+                userInfo.Name, ArcaeaUtils.ToDisplayPotential(userInfo.Potential)))
             .Image(image);
     }
 }

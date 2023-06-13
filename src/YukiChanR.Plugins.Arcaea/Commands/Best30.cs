@@ -34,7 +34,7 @@
 //         _logger.LogInformation("[Best30:Query] {ArcaeaUser} -> {SongName} ({Difficulty})",
 //             logTarget, songname, difficulty.ToShortDisplayDifficulty());
 //         
-//         var bestInfo = await _uaaClient.User.GetBestAsync(
+//         var bestInfo = await _uaaService.UaaClient.User.GetBestAsync(
 //             target, song.SongId, AuaSongQueryType.SongId, difficulty, AuaReplyWith.SongInfo);
 //         var userInfo = ArcaeaUser.FromUaa(bestInfo.AccountInfo);
 //         

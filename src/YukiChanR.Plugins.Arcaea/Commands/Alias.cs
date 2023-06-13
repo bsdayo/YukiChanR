@@ -1,4 +1,5 @@
-﻿using Flandre.Core.Messaging;
+﻿using System.Text;
+using Flandre.Core.Messaging;
 using Flandre.Framework.Common;
 using Flandre.Framework.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +17,7 @@ public partial class ArcaeaPlugin
 
         var song = await _songDb.SearchSongAsync(query);
         if (song is null)
-            // return ctx.Reply("没有找到该曲目哦~");
-            return ctx.Reply(_localizer["SongNotFound"]);
+            return ctx.Reply(_localizer["Common:SongNotFound"]);
 
         var aliases = await _songDb.Aliases
             .AsNoTracking()
@@ -25,9 +25,14 @@ public partial class ArcaeaPlugin
             .Select(alias => alias.Alias)
             .ToListAsync();
 
+        var sb = new StringBuilder();
+        foreach (var alias in aliases)
+            sb.Append($"\n- {alias}");
+
         return ctx.Reply()
-            .Text($"{song.Difficulties[2].NameEn} - {song.Difficulties[2].Artist}\n")
-            .Text("可用的别名有：\n")
-            .Text(string.Join('\n', aliases));
+            .Text(_localizer.GetReply("Alias",
+                song.Difficulties[2].NameEn,
+                song.Difficulties[2].Artist,
+                sb.ToString()));
     }
 }

@@ -1,3 +1,26 @@
 ﻿{
-  "SongNotFound": "没有找到该曲目哦~"
+  "Common": {
+    "SongNotFound": "没有找到该曲目哦~",
+    "UserNotBound": "请先使用 /a bind 名称或好友码 绑定你的账号哦~\n你也可以直接使用 {0} 查询指定用户。"
+  },
+  "Alias": {
+    "Reply": "{0} - {1}\n可用的别名有：{2}"
+  },
+  "Bind": {
+    "Reply": "绑定成功~\n{0} / {1}\n"
+  },
+  "Best": {
+    "Reply": "{0} ({1})\n"
+  },
+  "Guess": {
+    "GameNotStarted": "当前群内没有正在进行的猜曲绘游戏，可以发送“猜曲绘”来开启新游戏哦~",
+    "GameRunning": "当前猜曲绘游戏正在进行，请等待结束后再开始新游戏~",
+    "GameInitializing": "题目正在初始化中，请稍等...",
+    "GameTimeEnd": "时间到！揭晓答案——",
+    "GameTitle": "本轮题目 [{0}模式]：\n",
+    "GameTime": "{0:%s} 秒后揭晓答案~",
+    "WrongGuess": "猜错啦！",
+    "CorrectGuess": "猜对啦！",
+    "GuessAnswer": "{0} - {1}\n({2})"
+  }
 }

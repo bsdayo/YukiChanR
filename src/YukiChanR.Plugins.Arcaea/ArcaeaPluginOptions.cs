@@ -8,5 +8,5 @@ public sealed class ArcaeaPluginOptions
 
     public TimeSpan UaaTimeout { get; set; } = TimeSpan.FromMinutes(1);
 
-    public bool EnableGuess { get; set; } = true;
+    public TimeSpan GuessTime { get; set; } = TimeSpan.FromSeconds(30);
 }
