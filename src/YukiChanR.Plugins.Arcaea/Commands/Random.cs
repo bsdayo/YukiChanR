@@ -2,7 +2,7 @@
 using Flandre.Framework.Common;
 using Flandre.Framework.Routing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Localization;
 using UnofficialArcaeaAPI.Lib.Models;
 using YukiChanR.Core.Utils;
 using YukiChanR.Plugins.Arcaea.Entities;
@@ -15,64 +15,58 @@ public partial class ArcaeaPlugin
     [StringShortcut("随机曲目", AllowArguments = true)]
     public async Task<MessageContent> OnRandom(MessageContext ctx, params string[] range)
     {
+        var randomLocalizer = _localizer.GetSection("Random");
         int start, end;
         var allCharts = await _songDb.Charts.AsNoTracking().ToListAsync();
 
-        try
+        switch (range.Length)
         {
-            switch (range.Length)
-            {
-                // 不提供参数，全曲 Future 难度随机
-                case 0:
-                    return await ConstructRandomReply(ctx, allCharts
-                        .Where(chart => chart.RatingClass == (int)ArcaeaDifficulty.Future)
-                        .ToArray());
+            // 不提供参数，全曲 Future 难度随机
+            case 0:
+                return await ConstructRandomReply(ctx, allCharts
+                    .Where(chart => chart.RatingClass == (int)ArcaeaDifficulty.Future)
+                    .ToArray(), randomLocalizer);
 
-                // 提供定数范围
-                case 1:
-                    start = ArcaeaUtils.GetRatingRange(range[0]).Start;
-                    end = ArcaeaUtils.GetRatingRange(range[0]).End;
+            // 提供定数范围
+            case 1:
+                start = ArcaeaUtils.GetRatingRange(range[0]).Start;
+                end = ArcaeaUtils.GetRatingRange(range[0]).End;
 
-                    if (start == -1 || end == -1)
-                        return ctx.Reply("输入了错误的定数呢...");
-                    if (start is < 0 or > 120 || end is < 0 or > 126)
-                        return ctx.Reply("定数超出范围啦！");
+                if (start == -1 || end == -1)
+                    return ctx.Reply(randomLocalizer["InvalidRating"]);
+                if (start is < 0 or > 120 || end is < 0 or > 126)
+                    return ctx.Reply(randomLocalizer["RatingOutOfRange"]);
 
-                    return await ConstructRandomReply(ctx, allCharts
-                        .Where(chart => chart.Rating >= start && chart.Rating <= end)
-                        .ToArray());
+                return await ConstructRandomReply(ctx, allCharts
+                    .Where(chart => chart.Rating >= start && chart.Rating <= end)
+                    .ToArray(), randomLocalizer);
 
-                // 提供最低和最高定数
-                case 2:
-                    start = ArcaeaUtils.GetRatingRange(range[0]).Start;
-                    end = ArcaeaUtils.GetRatingRange(range[1]).End;
+            // 提供最低和最高定数
+            case 2:
+                start = ArcaeaUtils.GetRatingRange(range[0]).Start;
+                end = ArcaeaUtils.GetRatingRange(range[1]).End;
 
-                    if (start == -1 || end == -1)
-                        return ctx.Reply("输入了错误的定数呢...");
-                    if (start > end)
-                        return ctx.Reply("最低定数比最高定数大诶...");
-                    if (start is < 0 or > 120 || end is < 0 or > 120)
-                        return ctx.Reply("定数超出范围啦！");
+                if (start == -1 || end == -1)
+                    return ctx.Reply(randomLocalizer["InvalidRating"]);
+                if (start > end)
+                    return ctx.Reply(randomLocalizer["StartLargerThenEnd"]);
+                if (start is < 0 or > 120 || end is < 0 or > 120)
+                    return ctx.Reply(randomLocalizer["RatingOutOfRange"]);
 
-                    return await ConstructRandomReply(ctx, allCharts
-                        .Where(chart => chart.Rating >= start && chart.Rating <= end)
-                        .ToArray());
+                return await ConstructRandomReply(ctx, allCharts
+                    .Where(chart => chart.Rating >= start && chart.Rating <= end)
+                    .ToArray(), randomLocalizer);
 
-                default:
-                    return ctx.Reply("参数太多啦！");
-            }
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, string.Empty);
-            return ctx.Reply($"发生了奇怪的错误！({e.Message})");
+            default:
+                return ctx.Reply(_commonLocalizer["ArgumentTooMuch"]);
         }
     }
 
-    private async Task<MessageBuilder> ConstructRandomReply(MessageContext ctx, ArcaeaSongDbChart[] allCharts)
+    private async Task<MessageBuilder> ConstructRandomReply(MessageContext ctx, ArcaeaSongDbChart[] allCharts,
+        IStringLocalizer<ArcaeaPlugin> randomLocalizer)
     {
         if (allCharts.Length == 0)
-            return ctx.Reply("该定数范围内没有曲目哦~");
+            return ctx.Reply(randomLocalizer["NoSongInRange"]);
 
         var chart = allCharts[new Random().Next(allCharts.Length)];
 
@@ -84,10 +78,12 @@ public partial class ArcaeaPlugin
         var rating = chart.Rating / 10d;
 
         return ctx.Reply()
-            .Text("随机推荐曲目：\n")
+            .Text(randomLocalizer["ReplyTitle"])
             .Image(songCover)
-            .Text($"{chart.NameEn}\n")
-            .Text($"({package.Name})\n")
-            .Text($"{(ArcaeaDifficulty)chart.RatingClass} {rating.ToDisplayRating()} [{rating:N1}]");
+            .Text(randomLocalizer["ReplyBody",
+                chart.NameEn,
+                package.Name,
+                (ArcaeaDifficulty)chart.RatingClass,
+                rating.ToDisplayRating(), rating]);
     }
 }

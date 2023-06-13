@@ -13,11 +13,12 @@ public partial class ArcaeaPlugin
     [StringShortcut("查别名", AllowArguments = true)]
     public async Task<MessageContent> OnAlias(CommandContext ctx, params string[] songname)
     {
+        var aliasLocalizer = _localizer.GetSection("Alias");
         var query = string.Join(' ', songname);
 
         var song = await _songDb.SearchSongAsync(query);
         if (song is null)
-            return ctx.Reply(_localizer["Common:SongNotFound"]);
+            return ctx.Reply(_commonLocalizer["SongNotFound"]);
 
         var aliases = await _songDb.Aliases
             .AsNoTracking()
@@ -30,9 +31,9 @@ public partial class ArcaeaPlugin
             sb.Append($"\n- {alias}");
 
         return ctx.Reply()
-            .Text(_localizer.GetReply("Alias",
+            .Text(aliasLocalizer["Reply",
                 song.Difficulties[2].NameEn,
                 song.Difficulties[2].Artist,
-                sb.ToString()));
+                sb.ToString()]);
     }
 }

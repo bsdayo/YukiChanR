@@ -3,6 +3,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using YukiChanR.Core;
+using YukiChanR.Core.Utils;
 using YukiChanR.Plugins.Arcaea.ImageGen;
 
 namespace YukiChanR.Plugins.Arcaea;
@@ -17,6 +18,8 @@ public sealed partial class ArcaeaPlugin : Plugin
     private readonly ArcaeaSongDbContext _songDb;
     private readonly IStringLocalizer<ArcaeaPlugin> _localizer;
     private readonly ILogger<ArcaeaPlugin> _logger;
+
+    private readonly IStringLocalizer<ArcaeaPlugin> _commonLocalizer;
 
     public ArcaeaPlugin(
         IOptions<ArcaeaPluginOptions> options,
@@ -36,6 +39,8 @@ public sealed partial class ArcaeaPlugin : Plugin
         _songDb = songDb;
         _localizer = localizer;
         _logger = logger;
+
+        _commonLocalizer = _localizer.GetSection("Common");
     }
 
     internal static readonly string CacheDirectory = Path.Join(YukiDirectories.Cache, "arcaea");

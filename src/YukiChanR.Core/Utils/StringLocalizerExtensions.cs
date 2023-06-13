@@ -4,8 +4,10 @@ namespace YukiChanR.Core.Utils;
 
 public static class StringLocalizerExtensions
 {
-    public static string GetReply(this IStringLocalizer localizer, string key, params object[] args)
+    public static StringLocalizerSection<T> GetSection<T>(this IStringLocalizer<T> localizer, string name)
     {
-        return localizer[$"{key}:Reply", args];
+        if (localizer is StringLocalizerSection<T> section)
+            name = $"{section.Section}:{name}";
+        return new StringLocalizerSection<T>(localizer, name);
     }
 }

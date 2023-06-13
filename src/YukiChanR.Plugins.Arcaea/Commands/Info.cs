@@ -1,4 +1,5 @@
-﻿using Flandre.Core.Messaging;
+﻿using System.Text;
+using Flandre.Core.Messaging;
 using Flandre.Core.Messaging.Segments;
 using Flandre.Framework.Common;
 using Flandre.Framework.Routing;
@@ -15,12 +16,11 @@ public partial class ArcaeaPlugin
         [Option(ShortName = 'n')] bool nya,
         params string[] songname)
     {
+        var infoLocalizer = _localizer.GetSection("Info");
         var song = await _songDb.SearchSongAsync(string.Join("", songname));
 
-        // TODO: query from server
-
         if (song is null)
-            return ctx.Reply("没有找到该曲目哦~");
+            return ctx.Reply(_commonLocalizer["SongNotFound"]);
 
         var cover = await _cacheManager.GetSongCoverAsync(song.SongId);
 
@@ -33,16 +33,16 @@ public partial class ArcaeaPlugin
             mb.Image(ImageSegment.FromData(bydCover));
         }
 
-        mb
-            .Text(song.Difficulties[2].NameEn + "\n")
-            .Text($"({song.SetFriendly})");
-
+        var sb = new StringBuilder();
         for (var i = 0; i < song.Difficulties.Length; i++)
         {
             var rating = song.Difficulties[i].Rating;
-            mb.Text($"\n{(ArcaeaDifficulty)i} {rating.ToDisplayRating()} [{rating:N1}]");
+            sb.Append(_localizer["Info:Difficulty", (ArcaeaDifficulty)i, rating.ToDisplayRating(), rating]);
         }
 
-        return mb;
+        return infoLocalizer["Reply",
+            song.Difficulties[2].NameEn,
+            song.SetFriendly,
+            sb.ToString()].ToString();
     }
 }

@@ -27,7 +27,7 @@ public sealed class UaaService
 
     public string GetExceptionReply(UaaRequestException exception)
     {
-        var reply = _localizer[$"Statuses:{exception.Status}"];
+        var reply = _localizer[$"ErrorStatuses:{exception.Status}"];
         return reply.ResourceNotFound ? $"Error {exception.Status}: {exception.Message}" : reply;
     }
 }

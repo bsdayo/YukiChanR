@@ -1,13 +1,14 @@
 ﻿{
   "Common": {
     "SongNotFound": "没有找到该曲目哦~",
-    "UserNotBound": "请先使用 /a bind 名称或好友码 绑定你的账号哦~\n你也可以直接使用 {0} 查询指定用户。"
+    "UserNotBound": "请先使用 /a bind 名称或好友码 绑定你的账号哦~\n你也可以直接使用 {0} 查询指定用户。",
+    "ArgumentsTooMuch": "参数太多啦！"
   },
   "Alias": {
     "Reply": "{0} - {1}\n可用的别名有：{2}"
   },
   "Bind": {
-    "Reply": "绑定成功~\n{0} / {1}\n"
+    "Reply": "绑定成功~\n{0} <{1}>"
   },
   "Best": {
     "Reply": "{0} ({1})\n"
@@ -22,5 +23,24 @@
     "WrongGuess": "猜错啦！",
     "CorrectGuess": "猜对啦！",
     "GuessAnswer": "{0} - {1}\n({2})"
+  },
+  "Info": {
+    "Reply": "{0}\n({1}){2}",
+    "Difficulty": "\n{0} {1} [{2:N1}]"
+  },
+  "Ptt": {
+    "NeedQuery": "请输入需要计算的曲名哦~",
+    "NeedScore": "请输入需要计算的得分哦~",
+    "InvalidScore": "得分格式有误，请检查输入。",
+    "InvalidDifficulty": "难度格式有误，请检查输入。",
+    "Reply": "在曲目 {0} [{1}] 中，得分 {2} 的单曲潜力值为 {3:N4}。"
+  },
+  "Random": {
+    "InvalidRating": "输入了错误的定数呢...",
+    "RatingOutOfRange": "定数超出范围啦！",
+    "StartLargerThenEnd": "最低定数比最高定数大，怎么会是呢？",
+    "NoSongInRange": "该定数范围内没有曲目哦~",
+    "ReplyTitle": "随机推荐曲目：\n",
+    "ReplyBody": "{0}\n({1})\n{2} {3} {4:N1}"
   }
 }

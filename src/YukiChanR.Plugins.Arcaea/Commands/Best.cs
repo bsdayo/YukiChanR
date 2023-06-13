@@ -20,6 +20,7 @@ public partial class ArcaeaPlugin
         [Option(ShortName = 'u')] string user,
         params string[] songnameAndDifficulty)
     {
+        var bestLocalizer = _localizer.GetSection("Best");
         var (songQuery, difficulty) = ArcaeaUtils.ParseMixedSongNameAndDifficulty(songnameAndDifficulty);
 
         string target;
@@ -30,7 +31,7 @@ public partial class ArcaeaPlugin
             var binding = await _database.Users.AsNoTracking().FirstOrDefaultAsync(
                 u => u.Platform == ctx.Platform && u.UserId == ctx.UserId);
             if (binding is null)
-                return ctx.Reply(_localizer["Common:UserNotBound", "/a best -u 用户名或好友码"]);
+                return ctx.Reply(_commonLocalizer["UserNotBound", "/a best -u 用户名或好友码"]);
             target = binding.ArcaeaCode;
             logTarget = binding.ArcaeaName;
         }
@@ -41,7 +42,7 @@ public partial class ArcaeaPlugin
 
         var song = await _songDb.SearchSongAsync(songQuery);
         if (song is null)
-            return ctx.Reply(_localizer["Common:SongNotFound"]);
+            return ctx.Reply(_commonLocalizer["SongNotFound"]);
 
         var songname = song.Difficulties[(int)difficulty].NameEn;
 
@@ -66,8 +67,8 @@ public partial class ArcaeaPlugin
             ArcaeaRecord.FromUaa(bestInfo.Record, bestInfo.SongInfo![0]), pref);
 
         return ctx
-            .Reply(_localizer.GetReply("Best",
-                userInfo.Name, ArcaeaUtils.ToDisplayPotential(userInfo.Potential)))
+            .Reply(bestLocalizer["Reply",
+                userInfo.Name, ArcaeaUtils.ToDisplayPotential(userInfo.Potential)])
             .Image(image);
     }
 }

@@ -16,7 +16,7 @@ public partial class ArcaeaPlugin
         var (songname, difficulty) = ArcaeaUtils.ParseMixedSongNameAndDifficulty(songnameAndDifficulty);
 
         var songId = await _songDb.SearchIdAsync(songname);
-        if (songId is null) return ctx.Reply("没有找到该曲目呢...");
+        if (songId is null) return ctx.Reply(_commonLocalizer["SongNotFound"]);
 
         var preview = await _cacheManager.GetPreviewImageAsync(songId, difficulty);
 

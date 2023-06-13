@@ -13,6 +13,7 @@ public partial class ArcaeaPlugin
     [Command("a.bind")]
     public async Task<MessageContent> OnBind(MessageContext ctx, string username)
     {
+        var bindLocalizer = _localizer.GetSection("Bind");
         UaaUserInfoContent userInfo;
         try
         {
@@ -40,7 +41,7 @@ public partial class ArcaeaPlugin
         _database.Users.Update(newBind);
         await _database.SaveChangesAsync();
 
-        return ctx.Reply(_localizer.GetReply("Bind",
-            userInfo.AccountInfo.Name, userInfo.AccountInfo.Code));
+        return ctx.Reply(bindLocalizer["Reply",
+            userInfo.AccountInfo.Name, userInfo.AccountInfo.Code]);
     }
 }

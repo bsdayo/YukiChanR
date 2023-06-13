@@ -242,7 +242,10 @@ public partial class ArcaeaImageGenerator
 
     public async Task<byte[]> GetSingleV1Background(ArcaeaRecord record)
     {
-        var path = $"{ArcaeaPlugin.CacheDirectory}/single-dynamic-bg-v1/{record.SongId}{
+        var dir = $"{ArcaeaPlugin.CacheDirectory}/single-dynamic-bg-v1";
+        Directory.CreateDirectory(dir);
+
+        var path = $"{dir}/{record.SongId}{
             (record.JacketOverride ? $"-{(int)record.Difficulty}" : "")}.jpg";
 
         if (File.Exists(path))
