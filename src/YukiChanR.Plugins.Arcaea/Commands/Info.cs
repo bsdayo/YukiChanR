@@ -40,9 +40,11 @@ public partial class ArcaeaPlugin
             sb.Append(_localizer["Info:Difficulty", (ArcaeaDifficulty)i, rating.ToDisplayRating(), rating]);
         }
 
-        return infoLocalizer["Reply",
-            song.Difficulties[2].NameEn,
-            song.SetFriendly,
-            sb.ToString()].ToString();
+        return new MessageBuilder()
+            .Image(cover)
+            .Text(infoLocalizer["Reply",
+                song.Difficulties[2].NameEn,
+                song.SetFriendly,
+                sb.ToString()].ToString());
     }
 }
