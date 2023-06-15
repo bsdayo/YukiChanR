@@ -45,13 +45,19 @@ public sealed partial class ArcaeaPlugin : Plugin
 
     internal static readonly string CacheDirectory = Path.Join(YukiDirectories.Cache, "arcaea");
 
+    internal static readonly string DataDirectory = Path.Join(YukiDirectories.Data, "arcaea");
+
     internal static readonly string TempDirectory = Path.Combine(YukiDirectories.Temp, "arcaea");
 
     public override async Task OnLoadingAsync()
     {
+        Directory.CreateDirectory(DataDirectory);
         Directory.CreateDirectory(TempDirectory);
 
-        var songDb = new ArcaeaResourceManager().GetData("Databases.arcsong.db");
-        await File.WriteAllBytesAsync(ArcaeaSongDbContext.ExtractedPath, songDb);
+        var songDb = new ArcaeaResourceManager().GetData("arcsong.db");
+        await File.WriteAllBytesAsync(ArcaeaSongDbContext.ArcSongDbPath, songDb);
+
+        if (!File.Exists(CustomSongDbContext.CustomSongDbPath))
+            await new CustomSongDbContext().Database.EnsureCreatedAsync();
     }
 }

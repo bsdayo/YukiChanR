@@ -15,6 +15,7 @@ public static class PluginCollectionExtensions
         plugins.Services.TryAddSingleton<ArcaeaImageGenerator>();
         plugins.Services.TryAddSingleton<UaaService>();
         plugins.Services.AddDbContext<ArcaeaSongDbContext>();
+        plugins.Services.AddDbContext<CustomSongDbContext>();
         plugins.Services.AddDbContext<ArcaeaDbContext>();
     }
 

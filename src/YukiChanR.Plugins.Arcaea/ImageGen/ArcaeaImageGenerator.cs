@@ -1,12 +1,13 @@
-﻿using SkiaSharp;
+﻿using Microsoft.Extensions.Localization;
+using SkiaSharp;
 
 namespace YukiChanR.Plugins.Arcaea.ImageGen;
 
 public sealed partial class ArcaeaImageGenerator
 {
     private readonly ArcaeaCacheManager _cacheManager;
-
     private readonly ArcaeaResourceManager _resources;
+    private readonly IStringLocalizer<ArcaeaImageGenerator> _localizer;
 
     private readonly (
         SKTypeface TitilliumWeb_Regular,
@@ -24,10 +25,12 @@ public sealed partial class ArcaeaImageGenerator
         ("#bb2b43", "#962336", "#db4b63", "#b64356", "#9b0b23", "#760316") // Beyond
     };
 
-    public ArcaeaImageGenerator(ArcaeaCacheManager cacheManager, ArcaeaResourceManager resources)
+    public ArcaeaImageGenerator(ArcaeaCacheManager cacheManager, ArcaeaResourceManager resources,
+        IStringLocalizer<ArcaeaImageGenerator> localizer)
     {
         _cacheManager = cacheManager;
         _resources = resources;
+        _localizer = localizer;
 
         _fonts = (
             SKTypeface.FromStream(_resources.GetFontStream("TitilliumWeb-Regular.ttf")),

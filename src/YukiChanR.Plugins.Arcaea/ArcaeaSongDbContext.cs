@@ -5,15 +5,25 @@ using YukiChanR.Plugins.Arcaea.Models;
 
 namespace YukiChanR.Plugins.Arcaea;
 
-public sealed class ArcaeaSongDbContext : DbContext
+public class ArcaeaSongDbContext : DbContext
 {
-    internal static string ExtractedPath { get; } = Path.Combine(ArcaeaPlugin.TempDirectory, "arcsong.db");
+    private readonly CustomSongDbContext? _customDb;
+    internal static string ArcSongDbPath { get; } = Path.Combine(ArcaeaPlugin.TempDirectory, "arcsong.db");
 
     public DbSet<ArcaeaSongDbChart> Charts => Set<ArcaeaSongDbChart>();
 
     public DbSet<ArcaeaSongDbAlias> Aliases => Set<ArcaeaSongDbAlias>();
 
     public DbSet<ArcaeaSongDbPackage> Packages => Set<ArcaeaSongDbPackage>();
+
+    public ArcaeaSongDbContext()
+    {
+    }
+
+    public ArcaeaSongDbContext(CustomSongDbContext customDb)
+    {
+        _customDb = customDb;
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -22,7 +32,7 @@ public sealed class ArcaeaSongDbContext : DbContext
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"DataSource={ExtractedPath}");
+        => options.UseSqlite($"DataSource={ArcSongDbPath}");
 
     /// <summary>
     /// 模糊搜索曲目，依赖 arcsong.db
@@ -60,13 +70,18 @@ public sealed class ArcaeaSongDbContext : DbContext
 
         source = source.Replace(" ", "").ToLower();
 
-        var aliases = await Aliases
-            .AsNoTracking()
-            .Where(alias => alias.SongId == source || alias.Alias.ToLower() == source)
-            .ToListAsync();
+        foreach (var db in new[] { this, _customDb })
+        {
+            if (db is null) continue;
 
-        if (aliases.Count > 0)
-            return aliases[0].SongId;
+            var aliases = await db.Aliases
+                .AsNoTracking()
+                .Where(alias => alias.SongId == source || alias.Alias.ToLower() == source)
+                .ToListAsync();
+
+            if (aliases.Count > 0)
+                return aliases[0].SongId;
+        }
 
         var charts = await Charts.AsNoTracking().ToArrayAsync();
 
