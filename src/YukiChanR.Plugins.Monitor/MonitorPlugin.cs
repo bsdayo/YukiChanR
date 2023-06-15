@@ -20,10 +20,7 @@ public sealed class MonitorPlugin : Plugin
         var builder = new StringBuilder();
         builder.AppendLine($"暮雪酱 Revive [{BuildInfo.RefName}@{BuildInfo.ShortCommitHash}]");
 
-        if (uptime || all)
-        {
-            builder.AppendLine($"\nUptime: {UptimeStopwatch.Elapsed:d\\.hh\\:mm\\:ss\\.fff}");
-        }
+        if (uptime || all) builder.AppendLine($"\nUptime: {UptimeStopwatch.Elapsed:d\\.hh\\:mm\\:ss\\.fff}");
 
         builder.Append("\nDeveloped with love by bsdayo.");
 
