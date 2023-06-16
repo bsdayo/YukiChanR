@@ -41,6 +41,6 @@
     "StartLargerThenEnd": "最低定数比最高定数大，怎么会是呢？",
     "NoSongInRange": "该定数范围内没有曲目哦~",
     "ReplyTitle": "随机推荐曲目：\n",
-    "ReplyBody": "{0}\n({1})\n{2} {3} {4:N1}"
+    "ReplyBody": "{0}\n({1})\n{2} {3} [{4:N1}]"
   }
 }

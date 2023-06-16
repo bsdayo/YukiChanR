@@ -1,6 +1,5 @@
 ﻿using Flandre.Adapters.OneBot.Extensions;
 using Flandre.Framework;
-using Flandre.Framework.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
