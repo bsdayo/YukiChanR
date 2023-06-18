@@ -25,6 +25,9 @@ services:
   go-cqhttp:
     image: silicer/go-cqhttp:latest
     container_name: ykr-gocq
+    command: [ -update-protocol, -faststart ]
+    stdin_open: true
+    tty: true
     volumes:
       - ykr-gocq:/data
 
