@@ -4,10 +4,10 @@
 
 - Arcaea
     - [x] `/a alias`
-    - [ ] `/a best`
-    - [ ] `/a b30`
+    - [x] `/a best`
+    - [x] `/a b30`
     - [x] `/a bind`
-    - [ ] `/a guess`
+    - [x] `/a guess`
     - [x] `/a info`
     - [x] `/a preview`
     - [x] `/a ptt`
@@ -20,6 +20,9 @@
     - [ ] `/status`
     - [ ] `/trans`
     - [ ] `/wa`
+
+### 需要注意的变化
+- `/a recent` 指令已移除
 
 ### 开源
 

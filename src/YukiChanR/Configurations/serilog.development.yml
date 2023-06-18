@@ -1,0 +1,4 @@
+# === Serilog 日志记录配置（开发环境） ===
+serilog:
+  minimumLevel:
+    default: Debug   # 最低日志等级

@@ -10,7 +10,7 @@ using YukiChanR.Plugins.Monitor;
 
 MonitorPlugin.UptimeStopwatch.Start();
 
-var builder = FlandreApp.CreateBuilder();
+var builder = FlandreApp.CreateBuilder(args);
 
 builder.Configuration.PrepareConfigurations(builder.Environment, args);
 builder.Services.ConfigureFlandreApp(builder.Configuration);

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using UnofficialArcaeaAPI.Lib.Responses;
 
 #pragma warning disable CS8618
 
@@ -20,4 +21,25 @@ public sealed class ArcaeaBest30
 
     [JsonIgnore]
     public bool HasOverflow => OverflowRecords is not null;
+
+    public static ArcaeaBest30 FromUaa(UaaUserBestsResultContent result)
+    {
+        return new ArcaeaBest30
+        {
+            User = ArcaeaUser.FromUaa(result.AccountInfo),
+
+            Recent10Avg = result.Recent10Avg,
+            Best30Avg = result.Best30Avg,
+
+            Records = result.Best30List.Select((record, i)
+                    => ArcaeaRecord.FromUaa(record, result.Best30SongInfo![i]))
+                .ToArray(),
+
+            OverflowRecords = result.Best30Overflow is null
+                ? Array.Empty<ArcaeaRecord>()
+                : result.Best30Overflow.Select((record, i)
+                        => ArcaeaRecord.FromUaa(record, result.Best30OverflowSongInfo![i]))
+                    .ToArray()
+        };
+    }
 }

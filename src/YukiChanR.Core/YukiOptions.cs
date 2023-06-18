@@ -18,7 +18,7 @@ public sealed class YukiDatabaseOptions
 
     public string Username { get; set; } = "postgres";
 
-    public string Password { get; set; } = "";
+    public string Password { get; set; } = "postgres";
 
     public string Database { get; set; } = "postgres";
 

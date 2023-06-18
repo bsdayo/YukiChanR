@@ -1,7 +1,7 @@
 ﻿{
   "Common": {
     "SongNotFound": "没有找到该曲目哦~",
-    "UserNotBound": "请先使用 /a bind 名称或好友码 绑定你的账号哦~\n你也可以直接使用 {0} 查询指定用户。",
+    "UserNotBound": "请先使用 /a bind 用户名或好友码 绑定你的账号哦~\n你也可以直接使用 {0} 查询指定用户。",
     "ArgumentsTooMuch": "参数太多啦！"
   },
   "Alias": {
@@ -11,6 +11,14 @@
     "Reply": "绑定成功~\n{0} <{1}>"
   },
   "Best": {
+    "Reply": "{0} ({1})\n"
+  },
+  "Best30": {
+    "SessionCached": "该用户已经在 12 小时内查过一次 Best30 了，正在查询缓存结果...",
+    "SessionAlreadyStarted": "该用户当前正在进行一次查分，请坐和放宽...",
+    "SessionWaitingForAccount": "正在拼车中...再等待 {0} 人查分即可成功！\n查询结束后会进行回复，请耐心等待~",
+    "SessionQuerying": "正在查询中...已查询 {0} 个谱面。\n查询结束后会进行回复，请耐心等待~",
+    "SessionNextRefresh": "当前为缓存结果，你可以在 {0:%h} 小时 {0:%m} 分 {0:%s} 秒后重新查询最新数据。",
     "Reply": "{0} ({1})\n"
   },
   "Guess": {

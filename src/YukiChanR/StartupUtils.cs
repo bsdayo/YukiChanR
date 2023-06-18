@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sentry;
@@ -7,8 +8,11 @@ using YukiChanR.Core;
 
 namespace YukiChanR;
 
-public static class StartupUtils
+public static partial class StartupUtils
 {
+    [GeneratedRegex(@"(?<=Configurations\.).*(?=\.yml)")]
+    private static partial Regex ConfigurationNameRegex();
+
     public static void PrepareConfigurations(this ConfigurationManager configuration,
         IHostEnvironment environment, string[] args)
     {
@@ -20,18 +24,20 @@ public static class StartupUtils
         var configResources = assembly
             .GetManifestResourceNames()
             .Where(name => name.Contains("Configurations"));
-
         var configNames = new List<string>();
 
-        foreach (var name in configResources)
+        foreach (var res in configResources)
         {
-            var configName = name.Split('.')[^2];
-            var configPath = Path.Combine(YukiDirectories.Configs, $"{configName}.yml");
-            configNames.Add(configName);
+            var match = ConfigurationNameRegex().Match(res);
+            if (!match.Success) continue;
+
+            var name = match.Value;
+            configNames.Add(name);
+            var configPath = Path.Combine(YukiDirectories.Configs, $"{name}.yml");
 
             if (File.Exists(configPath)) continue;
 
-            var stream = assembly.GetManifestResourceStream(name)!;
+            var stream = assembly.GetManifestResourceStream(res)!;
             var fs = File.OpenWrite(configPath);
             stream.CopyTo(fs);
             fs.Close();
